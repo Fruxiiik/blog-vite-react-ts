@@ -81,7 +81,7 @@ export const followArticle = createAsyncThunk('articles/followArticle', async (_
     },
   })
   const data = await response.json()
-  return data
+  return data.article
 })
 
 export const unFollowArticle = createAsyncThunk('articles/unFollowArticle', async (_, { getState }) => {
@@ -93,7 +93,7 @@ export const unFollowArticle = createAsyncThunk('articles/unFollowArticle', asyn
     },
   })
   const data = await response.json()
-  return data
+  return data.article
 })
 
 const articleSlice = createSlice({

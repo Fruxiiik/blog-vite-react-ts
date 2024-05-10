@@ -1,0 +1,40 @@
+.container {
+  margin: 60px auto 0;
+  width: 384px;
+  display: flex;
+  padding: 48px 32px;
+  flex-direction: column;
+  align-items: center;
+  gap: 21px;
+  border-radius: 6px;
+  border: 1px solid var(--text-color-grey-5, #D9D9D9);
+  background: var(--text-color-white, #FFFFFF);
+  box-shadow: 0 22px 106px 0 rgba(0, 0, 0, 0.07), 0 9.191px 44.284px 0 rgba(0, 0, 0, 0.05), 0 4.914px 23.676px 0 rgba(0, 0, 0, 0.04), 0 2.755px 13.273px 0 rgba(0, 0, 0, 0.04), 0 1.463px 7.049px 0 rgba(0, 0, 0, 0.03), 0 0.609px 2.933px 0 rgba(0, 0, 0, 0.02);
+}
+
+.title {
+  color: var(--text-color-grey-9, #262626);
+  text-align: center;
+
+  font-family: var(--font-text);
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 28px; /* 140% */
+}
+.link {
+  text-align: center;
+  font-family: var(--font-text);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  &__text {
+    color: var(--text-color-grey-7, #8C8C8C);
+  }
+  &__signUp {
+    text-decoration: none;
+    margin-left: 3px;
+    color: var(--info-color);
+  }
+}

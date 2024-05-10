@@ -1,0 +1,202 @@
+.root {
+
+}
+
+.link {
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+  &:hover {
+    transform: scale(1.01);
+  }
+}
+
+.article {
+  display: flex;
+  flex-direction: column;
+  width: 941px;
+  height: 140px;
+  background-color: var(--background-color-white);
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
+  flex-shrink: 0;
+  padding: 16px 16px 22px;
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.15);
+  &__Full {
+    height: unset;
+    word-break: break-word;
+    margin: 20px 0;
+  }
+}
+
+.header {
+  display: grid;
+  grid-template-columns: auto 1fr 25%;
+  grid-auto-rows: 1fr 1fr; // 28px 20px ???
+  gap: 6px 12px;
+  grid-template-areas:
+          "title likes profile"
+          "tags tags profile";
+}
+
+.title {
+  grid-area: title;
+  color: var(--info-color, #1890FF);
+  font-family: var(--font-text);
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 28px; /* 140% */
+  max-width: 550px;
+  max-height: 28px;
+  overflow: hidden;
+  word-break: break-all;
+
+}
+
+.likes {
+  display: flex;
+  grid-area: likes;
+  align-self: center;
+  align-items: center;
+  &__count {
+    color: var(--text-color, rgba(0, 0, 0, 0.75));
+    font-family: var(--font-text);
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+  }
+}
+
+.tags {
+  grid-area: tags;
+  background: var(--background-color-white);
+  display: flex;
+  overflow: hidden;
+}
+
+.tag {
+  color: var(--text-color-secondary, rgba(0, 0, 0, 0.50));
+  font-family: var(--font-text);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  padding: 2px 5px;
+  margin-right: 8px;
+  border-radius: 2px;
+  border: 1px solid var(--text-color-secondary, rgba(0, 0, 0, 0.50));
+  align-self: center;
+}
+
+.profile {
+  display: grid;
+  grid-template-columns: max-content 46px;
+  grid-template-rows: 28px 22px;
+  gap: 0 12px;
+  grid-template-areas:
+          "name logo"
+          "time logo";
+  grid-area: profile;
+  justify-content: end;
+}
+
+.name {
+  grid-area: name;
+
+  color: var(--heading-color, rgba(0, 0, 0, 0.85));
+  font-family: var(--font-text);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  align-self: center;
+  text-align: center;
+}
+
+.logo {
+  grid-area: logo;
+  &__img {
+    border-radius: 50%;
+  }
+}
+
+.time {
+  grid-area: time;
+
+  color: var(--text-color-secondary, rgba(0, 0, 0, 0.50));
+  font-family: var(--font-text);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  text-align: center;
+}
+
+.body {
+  margin-top: 25px;
+  color: var(--text-color, rgba(0, 0, 0, 0.75));
+  font-family: var(--font-text);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
+  & ul, ol {
+    padding-left: 20px;
+    margin-left: 0;
+  }
+  & h1 {
+    font-size: 20px;
+  }
+  & h2 {
+    margin-top: 8px;
+    font-size: 18px;
+  }
+}
+
+.button {
+  margin-left: 8px !important;
+  &__like {
+    width: 16px;
+    height: 16px;
+  }
+  &__delete {
+    border-color: var(--error-color, #FF0000) !important;
+    color: var(--error-color, #FF0000) !important;
+    transition: all 0.3s ease !important;
+    &:hover {
+      background-color: rgba(255, 0, 0, 0.1) !important;
+    }
+  }
+  &__edit {
+    border-color: var(--success-color, #52C41A) !important;
+    color: var(--success-color, #52C41A) !important;
+    transition: all 0.3s ease !important;
+    &:hover {
+      background-color: rgba(82, 196, 26, 0.1) !important;
+    }
+  }
+}
+
+.text {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-text);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
+  overflow: hidden;
+  word-break: break-word;
+  color: var(--text-color-secondary, rgba(0, 0, 0, 0.50));
+  &__Full {
+    margin-top: 20px;
+  }
+}
+
+.color {
+  font-size: 2rem !important;
+  color: var(--text-color, rgba(0, 0, 0, 0.75));
+  &-active {
+    color: var(--text-color-red, rgb(255, 0, 0));
+    font-size: 2rem !important;
+  }
+}

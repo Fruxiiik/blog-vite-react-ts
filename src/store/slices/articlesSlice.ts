@@ -9,7 +9,7 @@ const initialState: ArticlesState = {
   articleIndex: 0,
 }
 
-export const getArticles = createAsyncThunk<ArticlesState, number>('articles/fetchArticles', async (articleIndex) => {
+export const getArticles = createAsyncThunk('articles/fetchArticles', async (articleIndex: number) => {
   try {
     const response = await fetch(
       `https://blog.kata.academy/api/articles?&limit=5&offset=${articleIndex ? articleIndex * 5 : 0}`,
@@ -44,7 +44,7 @@ const articlesSlice = createSlice({
       .addCase(getArticles.pending, (state) => {
         state.isLoading = true
       })
-      .addCase(getArticles.fulfilled, (state, action: PayloadAction<ArticlesState>) => {
+      .addCase(getArticles.fulfilled, (state, action) => {
         state.paginationCount = Math.ceil(action.payload.articlesCount / 5)
         state.isLoading = false
         state.articles = action.payload.articles

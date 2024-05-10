@@ -1,17 +1,28 @@
 import { useEffect } from 'react'
-import { useForm, FieldValues, Path, DefaultValues, Controller, useFieldArray, ArrayPath } from 'react-hook-form'
+import {
+  useForm,
+  FieldValues,
+  Path,
+  DefaultValues,
+  Controller,
+  useFieldArray,
+  ArrayPath,
+  FieldArray,
+} from 'react-hook-form'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import { FormControl } from '@mui/base/FormControl'
 import FormHelperText from '@mui/material/FormHelperText'
 import { Input } from 'antd'
 
+import { CreateArticleData } from '@/assets/types/formTypes'
+
 import styles from './FormArticleContainer.module.scss'
 
 interface FormProps<TFormValues extends FieldValues, TSubmitValues> {
   onSubmit: (data: TSubmitValues) => void
   formData: DefaultValues<TFormValues>
-  defaultValues
+  defaultValues: CreateArticleData
   validate: (fieldName: keyof TFormValues, value: string) => boolean | string
   buttonText: string
 }
@@ -28,18 +39,18 @@ export const FormArticleContainer = <TFormValues extends FieldValues, TSubmitVal
     control,
     register,
     formState: { errors },
-  } = useForm<TFormValues>({
+  } = useForm<CreateArticleData>({
     mode: 'onBlur',
-    defaultValues,
+    defaultValues: defaultValues as CreateArticleData,
   })
   const { TextArea } = Input
   const { fields, append, remove } = useFieldArray({
     control,
-    name: 'tagList' as ArrayPath<TFormValues>,
+    name: 'tagList' as ArrayPath<CreateArticleData>,
   })
   useEffect(() => {
     if (fields.length === 0) {
-      append('')
+      append('' as FieldArray<TFormValues, ArrayPath<TFormValues>>)
     }
   }, [fields, append])
   const onSubmitHandler = handleSubmit((data) => {
@@ -48,14 +59,14 @@ export const FormArticleContainer = <TFormValues extends FieldValues, TSubmitVal
   return (
     <form onSubmit={onSubmitHandler} className={styles.form}>
       {Object.keys(formData).map((key) => {
-        const fieldName = key as Path<TFormValues>
+        const fieldName = key as Path<CreateArticleData>
         const fieldData = formData[fieldName]
         return (
           <Controller
             key={fieldName}
             control={control}
             name={fieldName}
-            rules={{ validate: (value) => validate(fieldName, value) }}
+            rules={{ validate: (value) => validate(fieldName, value as string) }}
             render={({ field, fieldState }) => {
               if (fieldName === 'tagList') {
                 return (
@@ -63,7 +74,7 @@ export const FormArticleContainer = <TFormValues extends FieldValues, TSubmitVal
                     {fields.map((item, index) => (
                       <div key={item.id} className={styles.tags}>
                         <TextField
-                          {...register(`tagList.${index}` as Path<TFormValues>, {
+                          {...register(`tagList.${index}`, {
                             validate: (value) => value.length >= 2 || 'Тег должен содержать не менее 2 символов',
                           })}
                           label={`Tag ${index + 1}`}
@@ -87,7 +98,12 @@ export const FormArticleContainer = <TFormValues extends FieldValues, TSubmitVal
                           </Button>
                         )}
                         {index === fields.length - 1 && (
-                          <Button type="button" variant="outlined" className={styles.add} onClick={() => append('')}>
+                          <Button
+                            type="button"
+                            variant="outlined"
+                            className={styles.add}
+                            onClick={() => append('' as FieldArray<TFormValues, ArrayPath<TFormValues>>)}
+                          >
                             Add tag
                           </Button>
                         )}

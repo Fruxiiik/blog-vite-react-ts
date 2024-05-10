@@ -62,8 +62,8 @@ export interface CreateArticleFormData {
 }
 
 export interface CreateArticleData {
-  title: string
-  description: string
-  body: string
+  title: string | undefined
+  description: string | undefined
+  body: string | undefined
   tagList: string[]
 }

@@ -8,7 +8,8 @@ import { styled } from '@mui/material/styles'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
 import { fetchCurrentUser, logout } from '@/store/slices/authSlice'
 import { clearCurrentArticle } from '@/store/slices/articleSlice'
-import { selectIsAuth, AppDispatch } from '@/store'
+import { AppDispatch } from '@/store'
+import { selectIsAuth } from '@/assets/types/storeTypes'
 
 import styles from './Header.module.scss'
 

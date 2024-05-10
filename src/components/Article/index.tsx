@@ -11,7 +11,8 @@ import { useDispatch } from 'react-redux'
 import Button from '@mui/material/Button'
 import { message, Popconfirm } from 'antd'
 
-import { AppDispatch, selectIsAuth } from '@/store'
+import { AppDispatch } from '@/store'
+import { selectIsAuth } from '@/assets/types/storeTypes'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
 import { deleteArticle, followArticle, setIsEditing, unFollowArticle } from '@/store/slices/articleSlice'
 import { Article as ArticleType } from '@/assets/types/articleTypes'
@@ -32,9 +33,9 @@ interface ArticleProps {
 
 export const Article: React.FC<ArticleProps> = ({ article, isFullArticle }) => {
   const { title, slug, description, body, favoritesCount, tagList, createdAt, favorited, author } = article
-  const { bio, following, image, username } = author
+  const { image, username } = author
   const isAuth = useTypedSelector(selectIsAuth)
-  const { isFollowProcess } = useTypedSelector((state) => state.article.isFollowProcess)
+  const { isFollowProcess } = useTypedSelector((state) => state.article)
   const navigate = useNavigate()
   const userData = useTypedSelector((state) => state.auth.data)
   const currentUserName = userData?.username ?? 'Default Username'
@@ -107,7 +108,7 @@ export const Article: React.FC<ArticleProps> = ({ article, isFullArticle }) => {
                 } catch (error) {
                   message.open({
                     type: 'error',
-                    content: error,
+                    content: 'error',
                     duration: 5,
                   })
                 }

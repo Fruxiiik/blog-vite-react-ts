@@ -13,7 +13,7 @@ import styles from './FullArticle.module.scss'
 export const FullArticle: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>()
   const { article, isLoading } = useTypedSelector((state) => state.article)
-  const articleData = article?.article // Получаем вложенный объект статьи
+  const articleData = article
   const { slug } = useParams<{ slug: string }>()
 
   useEffect(() => {

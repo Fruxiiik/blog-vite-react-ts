@@ -2,7 +2,7 @@ import { useEffect, ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { useTypedSelector } from '@/hooks/useTypedSelector'
-import { selectIsAuth } from '@/store'
+import { selectIsAuth } from '@/assets/types/storeTypes'
 
 interface ProtectedRouteProps {
   children: ReactNode

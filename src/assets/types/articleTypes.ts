@@ -6,18 +6,16 @@ export interface Author {
 }
 
 export interface Article {
-  article: {
-    slug: string
-    title: string
-    description: string
-    body: string
-    tagList: string[]
-    createdAt: string
-    updatedAt: string
-    favorited: boolean
-    favoritesCount: number
-    author: Author
-  }
+  slug: string
+  title: string
+  description: string
+  body: string
+  tagList: string[]
+  createdAt: string
+  updatedAt: string
+  favorited: boolean
+  favoritesCount: number
+  author: Author
 }
 
 export interface ArticleData {

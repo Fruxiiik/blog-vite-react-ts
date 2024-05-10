@@ -6,10 +6,12 @@ import { useNavigate, Navigate } from 'react-router-dom'
 import { FormArticleContainer } from '@/components'
 import { CreateArticleData, CreateArticleFormData } from '@/assets/types/formTypes'
 import { validateCreateArticle } from '@/helperFunctions/validation'
-import { AppDispatch, selectIsAuth } from '@/store'
+import { AppDispatch } from '@/store'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
 import { clearErrors } from '@/store/slices/authSlice'
+import { selectIsAuth } from '@/assets/types/storeTypes'
 import { createArticle, updateArticle } from '@/store/slices/articleSlice'
+import { ArticleData } from '@/assets/types/articleTypes'
 
 import styles from './CreateArticle.module.scss'
 
@@ -17,11 +19,11 @@ export const CreateArticle: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>()
   const isAuth = useTypedSelector(selectIsAuth)
   const navigate = useNavigate()
-  const { article, isEditing, currentArticle } = useTypedSelector((state) => state.article)
-  const title = article?.article?.title || ''
-  const description = article?.article?.description || ''
-  const body = article?.article?.body || ''
-  const tagList = article?.article?.tagList || ['']
+  const { isEditing, currentArticle, article } = useTypedSelector((state) => state.article)
+  const title = article?.title || ''
+  const description = article?.description || ''
+  const body = article?.body || ''
+  const tagList = article?.tagList || ['']
   const defaultCreateArticleValues: CreateArticleFormData = {
     title: { value: title, type: 'text', placeholder: 'Title' },
     description: { value: description, type: 'text', placeholder: 'Short description' },
@@ -39,10 +41,10 @@ export const CreateArticle: React.FC = () => {
     const { ...registerData } = data
     dispatch(clearErrors())
     if (isEditing) {
-      await dispatch(updateArticle(registerData))
+      await dispatch(updateArticle(registerData as ArticleData))
       navigate(`/articles/${currentArticle}`)
     } else {
-      await dispatch(createArticle(registerData))
+      await dispatch(createArticle(registerData as ArticleData))
       navigate('/')
     }
   }

@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { message } from 'antd'
 
+import type { RootState } from '@/assets/types/storeTypes'
 import { ArticleState, ArticleData } from '@/assets/types/articleTypes'
 
 const initialState: ArticleState = {
@@ -11,7 +12,7 @@ const initialState: ArticleState = {
   isFollowProcess: false,
 }
 
-export const getArticle = createAsyncThunk('articles/fetchArticle', async (slug) => {
+export const getArticle = createAsyncThunk('articles/fetchArticle', async (slug: string) => {
   try {
     const response = await fetch(`https://blog.kata.academy/api/articles/${slug}`, {
       method: 'GET',
@@ -21,7 +22,7 @@ export const getArticle = createAsyncThunk('articles/fetchArticle', async (slug)
       },
     })
     const data = await response.json()
-    return data
+    return data.article
   } catch (e) {
     console.log(e)
   }
@@ -46,7 +47,7 @@ export const createArticle = createAsyncThunk('articles/createArticle', async (a
 })
 
 export const updateArticle = createAsyncThunk('articles/updateArticle', async (article1: ArticleData, { getState }) => {
-  const { article } = getState()
+  const { article } = getState() as RootState
   const response = await fetch(`https://blog.kata.academy/api/articles/${article.currentArticle}`, {
     method: 'PUT',
     headers: {
@@ -60,7 +61,7 @@ export const updateArticle = createAsyncThunk('articles/updateArticle', async (a
 })
 
 export const deleteArticle = createAsyncThunk('articles/deleteArticle', async (_, { getState }) => {
-  const { article } = getState()
+  const { article } = getState() as RootState
   const response = await fetch(`https://blog.kata.academy/api/articles/${article.currentArticle}`, {
     method: 'DELETE',
     headers: {
@@ -72,7 +73,7 @@ export const deleteArticle = createAsyncThunk('articles/deleteArticle', async (_
 })
 
 export const followArticle = createAsyncThunk('articles/followArticle', async (_, { getState }) => {
-  const { article } = getState()
+  const { article } = getState() as RootState
   const response = await fetch(`https://blog.kata.academy/api/articles/${article.currentArticle}/favorite`, {
     method: 'POST',
     headers: {
@@ -84,7 +85,7 @@ export const followArticle = createAsyncThunk('articles/followArticle', async (_
 })
 
 export const unFollowArticle = createAsyncThunk('articles/unFollowArticle', async (_, { getState }) => {
-  const { article } = getState()
+  const { article } = getState() as RootState
   const response = await fetch(`https://blog.kata.academy/api/articles/${article.currentArticle}/favorite`, {
     method: 'DELETE',
     headers: {
@@ -114,7 +115,7 @@ const articleSlice = createSlice({
       .addCase(getArticle.fulfilled, (state, action) => {
         state.article = action.payload
         state.isLoading = false
-        state.currentArticle = action.payload.article.slug
+        state.currentArticle = action.payload.slug
       })
       .addCase(createArticle.pending, (state) => {
         state.isLoading = true

@@ -102,6 +102,7 @@ const articleSlice = createSlice({
   reducers: {
     clearCurrentArticle: (state) => {
       state.article = null
+      state.isEditing = false
     },
     setIsEditing: (state) => {
       state.isEditing = true

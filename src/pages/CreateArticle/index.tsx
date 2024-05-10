@@ -53,7 +53,7 @@ export const CreateArticle: React.FC = () => {
   }
   return (
     <div className={styles.container}>
-      <h3 className={styles.title}>Create new article</h3>
+      <h3 className={styles.title}>{isEditing ? 'Edit article' : 'Create new article'}</h3>
       <FormArticleContainer<CreateArticleFormData, CreateArticleData>
         onSubmit={onSubmit}
         formData={defaultCreateArticleValues}

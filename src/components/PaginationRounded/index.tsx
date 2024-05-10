@@ -16,7 +16,7 @@ export const PaginationRounded: React.FC = () => {
   useEffect(() => {
     dispatch(setArticleIndex(page))
   }, [dispatch, page])
-  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+  const handleChange = (_: React.ChangeEvent<unknown>, value: number) => {
     setPage(value)
     dispatch(setArticleIndex(value))
     localStorage.setItem('articlesIndex', (value - 1).toString())

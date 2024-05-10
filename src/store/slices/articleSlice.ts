@@ -43,7 +43,7 @@ export const createArticle = createAsyncThunk('articles/createArticle', async (a
     content: 'Your post has been successfully created!',
     duration: 5,
   })
-  return data
+  return data.article
 })
 
 export const updateArticle = createAsyncThunk('articles/updateArticle', async (article1: ArticleData, { getState }) => {
@@ -57,7 +57,7 @@ export const updateArticle = createAsyncThunk('articles/updateArticle', async (a
     body: JSON.stringify({ article: { ...article1 } }),
   })
   const data = await response.json()
-  return data
+  return data.article
 })
 
 export const deleteArticle = createAsyncThunk('articles/deleteArticle', async (_, { getState }) => {

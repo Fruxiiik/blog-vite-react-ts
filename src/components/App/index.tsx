@@ -5,7 +5,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import { Header, ProtectedRoute } from '@/components'
 import { Home, FullArticle, Login, Registration, Profile, CreateArticle } from '@/pages'
-import store, { AppDispatch } from '@/store'
+import { store, AppDispatch } from '@/store'
 import { autoSetArticleIndex } from '@/store/slices/articlesSlice'
 import { setAuth } from '@/store/slices/authSlice'
 

@@ -22,7 +22,7 @@ const App: React.FC = () => {
       <div className={classes.app_wrapper}>
         <Header />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route index element={<Home />} />
           <Route path="/articles" element={<Home />} />
           <Route
             path="/articles/:slug"

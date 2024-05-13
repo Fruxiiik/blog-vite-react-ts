@@ -93,7 +93,7 @@
     font-weight: 400;
     line-height: 22px; /* 157.143% */
     border: 1px solid var(--success-color, #52C41A);
-    transition: all 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out;
     &:hover {
       border: 1px solid var(--success-color, #52C41A);
       background-color: rgba(82, 196, 26, 0.1);

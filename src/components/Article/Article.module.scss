@@ -50,7 +50,8 @@
   max-height: 28px;
   overflow: hidden;
   word-break: break-all;
-
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .likes {
@@ -87,6 +88,10 @@
   border-radius: 2px;
   border: 1px solid var(--text-color-secondary, rgba(0, 0, 0, 0.50));
   align-self: center;
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .profile {
@@ -152,6 +157,10 @@
   }
 }
 
+.buttons {
+  display: flex;
+}
+
 .button {
   margin-left: 8px !important;
   &__like {
@@ -159,6 +168,8 @@
     height: 16px;
   }
   &__delete {
+    width: 80px;
+    height: 32px;
     border-color: var(--error-color, #FF0000) !important;
     color: var(--error-color, #FF0000) !important;
     transition: all 0.3s ease !important;
@@ -167,6 +178,8 @@
     }
   }
   &__edit {
+    width: 65px;
+    height: 32px;
     border-color: var(--success-color, #52C41A) !important;
     color: var(--success-color, #52C41A) !important;
     transition: all 0.3s ease !important;
@@ -187,6 +200,7 @@
   overflow: hidden;
   word-break: break-word;
   color: var(--text-color-secondary, rgba(0, 0, 0, 0.50));
+  padding-right: 16px;
   &__Full {
     margin-top: 20px;
   }

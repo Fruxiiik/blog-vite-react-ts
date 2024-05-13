@@ -23,6 +23,7 @@ const App: React.FC = () => {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/articles" element={<Home />} />
           <Route
             path="/articles/:slug"
             element={

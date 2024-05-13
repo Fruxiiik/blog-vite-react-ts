@@ -100,6 +100,9 @@ const articleSlice = createSlice({
   name: 'article',
   initialState,
   reducers: {
+    setCurrentArticle: (state, action) => {
+      state.currentArticle = action.payload
+    },
     clearCurrentArticle: (state) => {
       state.article = null
       state.isEditing = false
@@ -155,6 +158,6 @@ const articleSlice = createSlice({
 })
 
 // export const { setArticleIndex } = articleSlice.actions
-export const { clearCurrentArticle, setIsEditing } = articleSlice.actions
+export const { clearCurrentArticle, setIsEditing, setCurrentArticle } = articleSlice.actions
 
 export const articleReducer = articleSlice.reducer

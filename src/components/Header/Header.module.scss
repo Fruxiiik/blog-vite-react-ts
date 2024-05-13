@@ -21,6 +21,16 @@
   transition: transform 0.4s ease-in-out;
   align-self: center;
 
+  &__title {
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28px;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
   &:hover {
     transform: scale(1.05);
   }
@@ -32,19 +42,18 @@
 .buttons {
   display: flex;
   align-items: center;
-  button {
+  a, button {
     display: inline-flex;
     flex-direction: column;
     justify-content: center;
     flex-shrink: 0;
-
+    text-decoration: none;
     background: none;
     color: black;
     margin-left: 27px;
     text-transform: unset;
   }
   .link {
-    text-decoration: none;
     &:visited {
       color: var(--text-color);
     }
@@ -53,7 +62,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: 27px;
+    //margin-left: 27px;
     &__username {
       color: var(--heading-color, rgba(0, 0, 0, 0.85));
       font-family: var(--font-text);

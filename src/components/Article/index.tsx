@@ -14,7 +14,13 @@ import { message, Popconfirm } from 'antd'
 import { AppDispatch } from '@/store'
 import { selectIsAuth } from '@/assets/types/storeTypes'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
-import { deleteArticle, followArticle, setIsEditing, unFollowArticle } from '@/store/slices/articleSlice'
+import {
+  deleteArticle,
+  followArticle,
+  setIsEditing,
+  unFollowArticle,
+  setCurrentArticle,
+} from '@/store/slices/articleSlice'
 import { Article as ArticleType } from '@/assets/types/articleTypes'
 
 import styles from './Article.module.scss'
@@ -41,22 +47,32 @@ export const Article: React.FC<ArticleProps> = ({ article, isFullArticle }) => {
   const currentUserName = userData?.username ?? 'Default Username'
   const dispatch = useDispatch<AppDispatch>()
   const onFollow = () => {
-    if (favorited) dispatch(unFollowArticle())
-    if (!favorited) dispatch(followArticle())
+    dispatch(setCurrentArticle(slug))
+    if (!isAuth) {
+      navigate('/sign-in')
+    } else {
+      if (favorited) dispatch(unFollowArticle())
+      if (!favorited) dispatch(followArticle())
+    }
   }
   const articleContent = (
     <article className={`${styles.article} ${isFullArticle ? styles.article__Full : ''}`}>
       <header className={styles.header}>
-        <h5 className={styles.title}>{title}</h5>
+        {!isFullArticle ? (
+          <Link className={styles.link} to={`/articles/${slug}`}>
+            <h2 className={styles.title}>{title}</h2>
+          </Link>
+        ) : (
+          <h2 className={styles.title}>{title}</h2>
+        )}
         <div className={styles.likes}>
           <IconButton
             className={`${styles.button__like} ${styles.button}`}
-            disabled={!isAuth}
+            disabled={isFollowProcess}
             aria-label="like"
             size="medium"
             sx={{ marginRight: '8px' }}
             onClick={() => {
-              if (isFollowProcess) return
               onFollow()
             }}
           >
@@ -121,15 +137,18 @@ export const Article: React.FC<ArticleProps> = ({ article, isFullArticle }) => {
                 Delete
               </Button>
             </Popconfirm>
-            <Link className={styles.link} to={`/articles/${slug}/edit`}>
-              <Button
-                className={`${styles.button__edit} ${styles.button}`}
-                variant="outlined"
-                onClick={() => dispatch(setIsEditing())}
-              >
-                Edit
-              </Button>
-            </Link>
+            <Button
+              component={Link}
+              to={`/articles/${slug}/edit`}
+              role="button"
+              aria-label="Sign up for an account"
+              onClick={() => dispatch(setIsEditing())}
+              className={`${styles.button__edit} ${styles.button}`}
+              variant="outlined"
+              color="success"
+            >
+              Edit
+            </Button>
           </div>
         )}
       </div>
@@ -140,11 +159,5 @@ export const Article: React.FC<ArticleProps> = ({ article, isFullArticle }) => {
       )}
     </article>
   )
-  return isFullArticle ? (
-    <div className={styles.root}>{articleContent}</div>
-  ) : (
-    <Link className={styles.link} to={`/articles/${slug}`}>
-      <div className={styles.root}>{articleContent}</div>
-    </Link>
-  )
+  return <div className={styles.root}>{articleContent}</div>
 }

@@ -24,14 +24,7 @@ const App: React.FC = () => {
         <Routes>
           <Route index element={<Home />} />
           <Route path="/articles" element={<Home />} />
-          <Route
-            path="/articles/:slug"
-            element={
-              <ProtectedRoute>
-                <FullArticle />
-              </ProtectedRoute>
-            }
-          />
+          <Route path="/articles/:slug" element={<FullArticle />} />
           <Route path="/sign-in" element={<Login />} />
           <Route path="/sign-up" element={<Registration />} />
           <Route

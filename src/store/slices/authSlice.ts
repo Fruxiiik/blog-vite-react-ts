@@ -81,6 +81,7 @@ export const authSlice = createSlice({
       state.isAuthenticated = false
       state.token = ''
       localStorage.removeItem('token')
+      window.location.reload()
     },
     setAuth: (state) => {
       state.isAuthenticated = !state.isAuthenticated

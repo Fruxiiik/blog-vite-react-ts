@@ -6,7 +6,7 @@ import Button from '@mui/material/Button'
 import { styled } from '@mui/material/styles'
 
 import { useTypedSelector } from '@/hooks/useTypedSelector'
-import { fetchCurrentUser, logout } from '@/store/slices/authSlice'
+import { fetchCurrentUser, logout, clearErrors } from '@/store/slices/authSlice'
 import { clearCurrentArticle } from '@/store/slices/articleSlice'
 import { AppDispatch } from '@/store'
 import { selectIsAuth } from '@/assets/types/storeTypes'
@@ -40,14 +40,23 @@ export const Header: React.FC = () => {
   const onClickCreate = () => {
     dispatch(clearCurrentArticle())
   }
+  const onClickButton = () => {
+    dispatch(clearErrors())
+  }
 
   const headerButtons = isAuth ? (
     <>
-      <Link className={styles.link} to="/new-article">
-        <Button className={styles.create} variant="outlined" onClick={onClickCreate}>
-          Create article
-        </Button>
-      </Link>
+      <Button
+        component={Link}
+        to="/new-article"
+        role="button"
+        onClick={onClickCreate}
+        aria-label="Create an article"
+        className={styles.create}
+        variant="outlined"
+      >
+        Create article
+      </Button>
       <Link className={styles.link} to="/profile">
         <div className={styles.profile}>
           <p className={styles.profile__username}>{username}</p>
@@ -60,28 +69,42 @@ export const Header: React.FC = () => {
     </>
   ) : (
     <>
-      <Link to="/sign-in">
-        <Button className={styles.signIn} variant="text" color="info">
-          Sign In
-        </Button>
-      </Link>
-      <Link to="/sign-up">
-        <Button className={styles.signUp} variant="outlined" color="success">
-          Sign Up
-        </Button>
-      </Link>
+      <Button
+        component={Link}
+        to="/sign-in"
+        role="button"
+        aria-label="Sign in for an account"
+        onClick={onClickButton}
+        className={styles.signIn}
+        variant="text"
+        color="info"
+      >
+        Sign In
+      </Button>
+      <Button
+        component={Link}
+        to="/sign-up"
+        role="button"
+        aria-label="Sign up for an account"
+        onClick={onClickButton}
+        className={styles.signUp}
+        variant="outlined"
+        color="success"
+      >
+        Sign Up
+      </Button>
     </>
   )
   return (
-    <div className={styles.root}>
+    <header className={styles.root}>
       <Container component="nav">
         <div className={styles.inner}>
           <Link className={styles.logo} to="/">
-            <div>Realworld Blog</div>
+            <h1 className={styles.logo__title}>Realworld Blog</h1>
           </Link>
           <div className={styles.buttons}>{headerButtons}</div>
         </div>
       </Container>
-    </div>
+    </header>
   )
 }

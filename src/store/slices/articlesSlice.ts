@@ -11,10 +11,17 @@ const initialState: ArticlesState = {
 
 export const getArticles = createAsyncThunk('articles/fetchArticles', async (articleIndex: number) => {
   try {
+    const headers = new Headers()
+    const token = localStorage.getItem('token')
+    // Если токен существует, добавляем его в заголовки
+    if (token) {
+      headers.append('Authorization', `Token ${token}`)
+    }
     const response = await fetch(
       `https://blog.kata.academy/api/articles?&limit=5&offset=${articleIndex ? articleIndex * 5 : 0}`,
       {
         method: 'GET',
+        headers,
       }
     )
     const data = await response.json()
@@ -28,6 +35,13 @@ const articlesSlice = createSlice({
   name: 'articles',
   initialState,
   reducers: {
+    updateArticleInList: (state, action) => {
+      const updatedArticle = action.payload
+      const index = state.articles.findIndex((article) => article.slug === updatedArticle.slug)
+      if (index !== -1) {
+        state.articles[index] = { ...state.articles[index], ...updatedArticle }
+      }
+    },
     setArticleIndex(state, action: PayloadAction<number>) {
       state.articleIndex = action.payload - 1
       localStorage.setItem('articlesIndex', state.articleIndex.toString())
@@ -52,6 +66,6 @@ const articlesSlice = createSlice({
   },
 })
 
-export const { setArticleIndex, autoSetArticleIndex } = articlesSlice.actions
+export const { setArticleIndex, autoSetArticleIndex, updateArticleInList } = articlesSlice.actions
 
 export const articlesReducer = articlesSlice.reducer

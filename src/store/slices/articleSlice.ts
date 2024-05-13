@@ -4,6 +4,8 @@ import { message } from 'antd'
 import type { RootState } from '@/assets/types/storeTypes'
 import { ArticleState, ArticleData } from '@/assets/types/articleTypes'
 
+import { updateArticleInList } from './articlesSlice'
+
 const initialState: ArticleState = {
   article: null,
   currentArticle: null,
@@ -17,8 +19,7 @@ export const getArticle = createAsyncThunk('articles/fetchArticle', async (slug:
     const response = await fetch(`https://blog.kata.academy/api/articles/${slug}`, {
       method: 'GET',
       headers: {
-        Authorization:
-          'Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MjE3ODJhOGM4MjhkMWIwMDM5NjU5OCIsInVzZXJuYW1lIjoidGVzdDEiLCJleHAiOjE3MTk0OTMwODgsImlhdCI6MTcxNDMwOTA4OH0.ucMuQAgoNrSwDtdKwrLBBHRAbcfF2W-ug3o7DBR5UXQ',
+        Authorization: `Token ${localStorage.getItem('token')}`,
       },
     })
     const data = await response.json()
@@ -72,8 +73,9 @@ export const deleteArticle = createAsyncThunk('articles/deleteArticle', async (_
   return data
 })
 
-export const followArticle = createAsyncThunk('articles/followArticle', async (_, { getState }) => {
+export const followArticle = createAsyncThunk('articles/followArticle', async (_, { getState, dispatch }) => {
   const { article } = getState() as RootState
+  // const dispatch = useDispatch()
   const response = await fetch(`https://blog.kata.academy/api/articles/${article.currentArticle}/favorite`, {
     method: 'POST',
     headers: {
@@ -81,10 +83,11 @@ export const followArticle = createAsyncThunk('articles/followArticle', async (_
     },
   })
   const data = await response.json()
+  dispatch(updateArticleInList({ ...data.article, favorited: true }))
   return data.article
 })
 
-export const unFollowArticle = createAsyncThunk('articles/unFollowArticle', async (_, { getState }) => {
+export const unFollowArticle = createAsyncThunk('articles/unFollowArticle', async (_, { getState, dispatch }) => {
   const { article } = getState() as RootState
   const response = await fetch(`https://blog.kata.academy/api/articles/${article.currentArticle}/favorite`, {
     method: 'DELETE',
@@ -93,6 +96,7 @@ export const unFollowArticle = createAsyncThunk('articles/unFollowArticle', asyn
     },
   })
   const data = await response.json()
+  dispatch(updateArticleInList({ ...data.article, favorited: false }))
   return data.article
 })
 
